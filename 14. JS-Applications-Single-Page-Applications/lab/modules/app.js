@@ -1,4 +1,4 @@
-import {sum}  from './module.js';
+import {sum as sumata}  from './module.js';
 
-const result = sum(5, 3);
+const result = sumata(5, 3);
 document.querySelector('main').textContent = `The result is ${result}`;
