@@ -9,49 +9,91 @@ async function request(url, options) {
     return data;
 }
 
-
-//requests:
-//load all books from server
 async function getAllBooks() {
     const books = await request('http://localhost:3030/jsonstore/collections/books');
-    return books;
+    const rows = Object.entries(books).map(displayBook).join('');
+    document.querySelector('tbody').innerHTML = rows;
+
+}
+
+function displayBook([id, book]) {
+    const result = `<tr data-id="${id}">
+<td>${book.title}</td>
+<td>${book.author}</td>
+<td><button class="editBtn">Edit</button>
+<button class="deleteBtn">Delete</button></td></tr>`;
+    return result;
 }
 
 
-//create new book
-async function createBook(book) {
-    const result = await request('http://localhost:3030/jsonstore/collections/books', {
+async function createBook(event) {
+    event.preventDefault();
+    const formData = new FormData(event.target);
+    const book = {
+        title: formData.get('title'),
+        author: formData.get('author')
+    }
+    await request('http://localhost:3030/jsonstore/collections/books', {
         method: 'post',
         headers: {
             'Content-Type': 'application/json'
         },
         body: JSON.stringify(book)
     });
-    return result;
+    event.target.reset();
 }
 
-//update an existing book with ID
-async function updateBook(id, book) {
-    const result = await request('http://localhost:3030/jsonstore/collections/books/' + id, {
+
+async function updateBook(event) {
+    event.preventDefault();
+    const formData = new FormData(event.target);
+    const id = formData.get('id');
+    const book = {
+        title: formData.get('title'),
+        author: formData.get('author')
+    };
+    await request('http://localhost:3030/jsonstore/collections/books/' + id, {
         method: 'put',
-        headers: {
-            'Content-Type': 'application/json'
-        },
+        headers: {'Content-Type': 'application/json'},
         body: JSON.stringify(book)
     });
-    return result;
+    document.getElementById('createForm').style.display = 'block';
+    document.getElementById('editForm').style.display = 'none';
+    event.target.reset();
+    getAllBooks();
 }
 
-//delete  a book with ID
+async function deleteBook(id) {
+   await request('http://localhost:3030/jsonstore/collections/books/' + id, {
+        method: 'delete',
+    });
+  getAllBooks();
+}
 
+function start() {
+    document.getElementById('loadBooks').addEventListener('click', getAllBooks);
+    document.getElementById('createForm').addEventListener('submit', createBook);
+    document.getElementById('editForm').addEventListener('submit', updateBook);
+    document.querySelector('table').addEventListener('click', handleTableClick);
+}
 
-//event listener or load button
-//on the create button
-//logic for updating the input form and filling existing values(on edit)
-//program logic to reverse above changers to form
-//event listeners on the delete & edit buttons
+function handleTableClick(event) {
+    if (event.target.className === 'editBtn') {
+        document.getElementById('createForm').style.display = 'none';
+        document.getElementById('editForm').style.display = 'block';
+        const bookID = event.target.parentNode.parentNode.dataset.id;
+        displayBookInfoForEdit(bookID);
+    } else if (event.target.className === 'deleteBtn') {
+        const bookID = event.target.parentNode.parentNode.dataset.id;
+        deleteBook(bookID);
+    }
+}
 
+async function displayBookInfoForEdit(id) {
+    const book = await request('http://localhost:3030/jsonstore/collections/books/' + id);
+    document.querySelector('#editForm [name="id"]').value = id;
+    document.querySelector('#editForm [name="title"]').value = book.title;
+    document.querySelector('#editForm [name="author"]').value = book.author;
+}
 
-//main function
-//attach event listeners
-// load all books and display them
+start();
