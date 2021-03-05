@@ -1,21 +1,16 @@
-async function request(url, options) {
-    const response = await fetch(url, options);
-    if (response.ok !== true) {
-        const error = await response.json();
-        alert(error.message);
-        throw new Error(error.message);
-    }
-    const data = await response.json();
-    return data;
+start();
+function start() {
+    document.getElementById('loadBooks').addEventListener('click', getAllBooks);
+    document.getElementById('createForm').addEventListener('submit', createBook);
+    document.getElementById('editForm').addEventListener('submit', updateBook);
+    document.querySelector('table').addEventListener('click', handleTableClick);
 }
-
 async function getAllBooks() {
     const books = await request('http://localhost:3030/jsonstore/collections/books');
     const rows = Object.entries(books).map(displayBook).join('');
     document.querySelector('tbody').innerHTML = rows;
 
 }
-
 function displayBook([id, book]) {
     const result = `<tr data-id="${id}">
 <td>${book.title}</td>
@@ -24,8 +19,6 @@ function displayBook([id, book]) {
 <button class="deleteBtn">Delete</button></td></tr>`;
     return result;
 }
-
-
 async function createBook(event) {
     event.preventDefault();
     const formData = new FormData(event.target);
@@ -42,8 +35,6 @@ async function createBook(event) {
     });
     event.target.reset();
 }
-
-
 async function updateBook(event) {
     event.preventDefault();
     const formData = new FormData(event.target);
@@ -62,21 +53,12 @@ async function updateBook(event) {
     event.target.reset();
     getAllBooks();
 }
-
 async function deleteBook(id) {
     await request('http://localhost:3030/jsonstore/collections/books/' + id, {
         method: 'delete',
     });
     getAllBooks();
 }
-
-function start() {
-    document.getElementById('loadBooks').addEventListener('click', getAllBooks);
-    document.getElementById('createForm').addEventListener('submit', createBook);
-    document.getElementById('editForm').addEventListener('submit', updateBook);
-    document.querySelector('table').addEventListener('click', handleTableClick);
-}
-
 function handleTableClick(event) {
     if (event.target.className === 'editBtn') {
         document.getElementById('createForm').style.display = 'none';
@@ -91,12 +73,19 @@ function handleTableClick(event) {
         }
     }
 }
-
 async function displayBookInfoForEdit(id) {
     const book = await request('http://localhost:3030/jsonstore/collections/books/' + id);
     document.querySelector('#editForm [name="id"]').value = id;
     document.querySelector('#editForm [name="title"]').value = book.title;
     document.querySelector('#editForm [name="author"]').value = book.author;
 }
-
-start();
+async function request(url, options) {
+    const response = await fetch(url, options);
+    if (response.ok !== true) {
+        const error = await response.json();
+        alert(error.message);
+        throw new Error(error.message);
+    }
+    const data = await response.json();
+    return data;
+}
