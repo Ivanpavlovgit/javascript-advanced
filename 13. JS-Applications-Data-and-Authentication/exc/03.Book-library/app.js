@@ -64,10 +64,10 @@ async function updateBook(event) {
 }
 
 async function deleteBook(id) {
-   await request('http://localhost:3030/jsonstore/collections/books/' + id, {
+    await request('http://localhost:3030/jsonstore/collections/books/' + id, {
         method: 'delete',
     });
-  getAllBooks();
+    getAllBooks();
 }
 
 function start() {
@@ -84,8 +84,11 @@ function handleTableClick(event) {
         const bookID = event.target.parentNode.parentNode.dataset.id;
         displayBookInfoForEdit(bookID);
     } else if (event.target.className === 'deleteBtn') {
-        const bookID = event.target.parentNode.parentNode.dataset.id;
-        deleteBook(bookID);
+        const userHatesThisBook = confirm('Are you sure you hate this book so much you want to delete it ?');
+        if (userHatesThisBook) {
+            const bookID = event.target.parentNode.parentNode.dataset.id;
+            deleteBook(bookID);
+        }
     }
 }
 
