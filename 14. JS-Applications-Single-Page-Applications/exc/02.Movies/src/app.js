@@ -81,4 +81,5 @@ async function logout() {
         const error = await response.json();
         alert(error.message);
     }
+    }
 }
