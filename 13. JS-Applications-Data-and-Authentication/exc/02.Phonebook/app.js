@@ -36,6 +36,8 @@ async function createContact(event) {
     //it would be so much better with FormData() :(
     const contactPerson = document.getElementById('person').value;
     const contactPhone = document.getElementById('phone').value;
+    document.getElementById('person').value='';
+    document.getElementById('phone').value='';
     const contact = {
         person: contactPerson,
         phone: contactPhone
