@@ -1,0 +1,22 @@
+[
+  {
+    "title": "First Article",
+    "content": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aut dolore dolores excepturi hic ipsum maiores\n                mollitia sapiente sequi,\n                totam voluptate! Amet animi assumenda autem beatae delectus doloribus ducimus enim eos exercitationem\n                explicabo facere",
+    "author": "Author:Pesho one"
+  },
+  {
+    "title": "Second Article",
+    "content": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aut dolore dolores excepturi hic ipsum maiores\n                mollitia sapiente sequi,\n                totam voluptate! Amet animi assumenda autem beatae delectus doloribus ducimus enim eos exercitationem\n                explicabo facere\n                fugiat illo inventore ipsam iste laborum laudantium molestiae molestias neque officiis perspiciatis",
+    "author": "Author:Pesho two"
+  },
+  {
+    "title": "Third Article",
+    "content": " Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aut dolore dolores excepturi hic ipsum maiores\n                mollitia sapiente sequi,\n                totam voluptate! Amet animi assumenda autem beatae delectus doloribus ducimus enim eos exercitationem\n                explicabo facere\n                fugiat illo inventore ipsam iste laborum laudantium molestiae molestias neque officiis perspiciatis\n                placeat quis quisquam",
+    "author": "Author:Pesho three"
+  },
+  {
+    "title": "Fourth Article",
+    "content": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aut dolore dolores excepturi hic ipsum maiores\n                mollitia sapiente sequi,\n                totam voluptate! Amet animi assumenda autem beatae delectus doloribus ducimus enim eos exercitationem\n                explicabo facere\n                fugiat illo inventore ipsam iste laborum laudantium molestiae molestias neque officiis perspiciatis\n                placeat quis quisquam\n                recusandae reiciendis repellat reprehenderit repudiandae sequi ullam veritatis, vitae voluptas,",
+    "author": "Author:Pesho four"
+  }
+]
