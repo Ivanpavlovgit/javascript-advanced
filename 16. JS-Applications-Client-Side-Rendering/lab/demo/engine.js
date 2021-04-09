@@ -4,5 +4,4 @@ export function renderTemplate(templateString,data) {
     return   templateString.replace(pattern,(match,propName)=>{
         return data[propName];
     })
-
 }
