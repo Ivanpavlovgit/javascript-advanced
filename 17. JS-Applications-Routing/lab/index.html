@@ -7,29 +7,44 @@
 <body>
 <h1>Welcome to the demo</h1>
 <nav>
-    <a href='#home'>Home</a>
-    <a href='#catalog'>Catalog</a>
-    <a href='#about'>About</a>
+    <a href='/home'>Home</a>
+    <a href='/catalog'>Catalog</a>
+    <a href='/about'>About</a>
 </nav>
 <main>
     <h2>Home Page</h2>
     <p>Content</p>
 </main>
 <script>
+    window.addEventListener('popstate', event => {
+        console.log(event);
+    })
     const pages = {
-        '#home': '<h2>Home Page</h2> <p> home Content</p>',
-        '#catalog': '<h2>Catalog Page</h2> <p> catalog Content</p>',
-        '#about': '<h2>About Page</h2> <p> about Content</p>'
+        '/home': '<h2>Home Page</h2> <p> home Content</p>',
+        '/catalog': '<h2>Catalog Page</h2> <p> catalog Content</p>',
+        '/about': '<h2>About Page</h2> <p> about Content</p>'
     }
     const defaultPage = '<h2>404</h2> <p> Page not found :D!</p>'
-    const currentHash = window.location.hash;
     const main = document.querySelector('main');
-   main.innerHTML = pages[currentHash] || defaultPage;
-    window.addEventListener('hashchange',event=>{
-        const hash=window.location.hash;
-    //const url=new URL(event.newURL);
-        main.innerHTML = pages[hash] || defaultPage;
+    document.querySelector('nav').addEventListener('click', (event) => {
+        if (event.target.tagName === 'A') {
+            event.preventDefault();
+            history.pushState({name: 'kvoBE'}, '', event.target.href);
+            updateContent();
+        }
     })
+
+updateContent();
+
+
+    function updateContent() {
+        const state=history.state;
+        const pathname = window.location.pathname;
+        main.innerHTML = pages[pathname] || defaultPage;
+        console.log(state);
+    }
+
+    window.addEventListener('popstate', updateContent);
 </script>
 </body>
 </html>
